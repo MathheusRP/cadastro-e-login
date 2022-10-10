@@ -48,6 +48,15 @@ export const Div = styled.div`
         display: flex;
         flex-direction: column;
         position: relative;
+
+        .eye {
+            color: var(---grey-1);
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-size: 22px;
+            cursor: pointer;
+        }
         
         p {
             position: absolute;

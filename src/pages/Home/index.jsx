@@ -13,6 +13,9 @@ import { Api } from "../../Api/request"
 
 import { ToastContainer, toast } from 'react-toastify';
 
+import { AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
+import { useState } from "react"
+
 
 const schema = yup.object({
     email: yup.string().required('Insira seu Email'),
@@ -21,53 +24,53 @@ const schema = yup.object({
 
 export const Login = () => {
 
+    const [typePassword, setTypePassword] = useState ('password')
+
+    const [ eye, setEye ] = useState(false)
+
+    const eyes = () => {
+        setEye(!eye)
+        
+        eye ? (setTypePassword('password')) : (setTypePassword('text'))
+    }
+
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(schema),
     });
 
-
     const loginUser = (data) => {
-        console.log(data)
 
         Api.post('/sessions', {
             email: data.email,
             password: data.password
         })
         .then(resp => {
-            console.log(resp)
             localStorage.setItem('userToken', resp.data.token)
             localStorage.setItem('userId', resp.data.user.id)
             notify_success()
 
             setTimeout(() => {
                 navigate(`/home/${resp.data.user.id}`)
-            }, 4000);
+            }, 3000);
         })
         .catch(err => notify_error())
-        
     }
 
-    const notify_success = (alert) => toast.success("Login realizado !", {
+    const notify_success = () => toast.success("Login realizado !", {
         position: toast.POSITION.TOP_CENTER
     });
 
-      const notify_error = (alert) => toast.error("Falha ao fazer login !", {
+      const notify_error = () => toast.error("Falha ao fazer login !", {
         position: toast.POSITION.TOP_CENTER
       });
 
     return (
 
-        
-        
         <Div>
-
-
-        
-        <ToastContainer />
+            <ToastContainer />
       
-
             <h1> Kenzie Hub</h1>
             <form onSubmit={handleSubmit(loginUser)}>
                 <h2> Login </h2>
@@ -82,8 +85,9 @@ export const Login = () => {
                     </div>
                     <div className="DivInput">
                         <label htmlFor="password"> Password</label>
-                        <input id="password" type="password"
+                        <input id="password" type={typePassword}
                         {...register ('password')} />
+                        {eye ? ( <AiFillEyeInvisible onClick={eyes} className="eye"/> ) : ( <AiFillEye onClick={eyes} className="eye"/> )}
                     </div>
                     <button type="submit"> Entrar</button>
                 </section>

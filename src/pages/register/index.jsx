@@ -1,4 +1,3 @@
-
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
 import { Div } from "./registerStyle"
@@ -37,12 +36,8 @@ export const Register = () => {
         resolver: yupResolver(schema),
     });
 
-    // console.log(errors)
-
     const registerUser = (data) => {
 
-        console.log(data)
-        
         Api.post('/users', {
             "email": data.email,
             "password": data.password,
@@ -52,7 +47,6 @@ export const Register = () => {
             "course_module": data.course_module
           })
           .then(function (response) {
-            console.log(response);
             notify_success()
 
             setTimeout(() => {
@@ -60,7 +54,6 @@ export const Register = () => {
             }, 5000);
           })
           .catch(function (error) {
-            console.error(error);
             notify_error()
           });
     }
@@ -131,7 +124,6 @@ export const Register = () => {
                             <option value='Terceiro módulo (Introdução ao Backend)'> Terceiro módulo (Introdução ao Backend) </option>
                             <option value='Quarto módulo (Backend Avançado)'> Quarto módulo (Backend Avançado) </option>
                         </select>
-                        {/* <label htmlFor="text"> Selecionar módulo </label> */}
                     </div>
                     <button type="submit"> Cadastrar </button>
                     

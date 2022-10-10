@@ -1,5 +1,5 @@
 import { HomeStyled } from "./HomePageStyled"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { Api } from "../../Api/request"
 import { Link } from "react-router-dom"
@@ -8,16 +8,19 @@ export const HomePage = () => {
 
     const [user, setUser] = useState('')
 
+    const navigate = useNavigate()
+
     const { id } = useParams()
-    // console.log(id)
     useEffect(() => {
     Api.get(`/users/${id}`)
     .then(resp => {
         setUser(resp.data)
+        localStorage.getItem('userToken') ? (<></>) : (navigate('/'))
+        
     })
     }, [])
 
-    return(
+    return(        
         <HomeStyled>
 
            <header>
@@ -48,7 +51,6 @@ export const HomePage = () => {
             <h1>Loading</h1>
           )} 
             
-
         </HomeStyled>
     )
 }

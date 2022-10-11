@@ -49,18 +49,11 @@ export const Login = () => {
         .then(resp => {
             localStorage.setItem('userToken', resp.data.token)
             localStorage.setItem('userId', resp.data.user.id)
-            notify_success()
-
-            setTimeout(() => {
-                navigate(`/home/${resp.data.user.id}`)
-            }, 3000);
+            
+            navigate(`/home/${resp.data.user.id}`)
         })
         .catch(err => notify_error())
     }
-
-    const notify_success = () => toast.success("Login realizado !", {
-        position: toast.POSITION.TOP_CENTER
-    });
 
       const notify_error = () => toast.error("Falha ao fazer login !", {
         position: toast.POSITION.TOP_CENTER

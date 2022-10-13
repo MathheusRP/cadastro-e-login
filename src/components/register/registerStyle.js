@@ -1,7 +1,8 @@
 import styled from "styled-components";
-
+import 'react-toastify/dist/ReactToastify.min.css'
 
 export const Div = styled.div`
+
 
     display: flex;
     flex-direction: column;
@@ -9,31 +10,50 @@ export const Div = styled.div`
     justify-content: center;
     height: 100vh;
     gap: 32px;
+    /* overflow-y: auto; */
+    margin-top: 300px;
+    margin-bottom: 100px;
+    
+
+    .back {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 90%;
+        max-width: 400px;
+
+        a {
+            background-color: var(---grey-3);
+            color: var(---grey-0);
+            padding: 10px 20px;
+            border-radius: 4px;
+        }
+    }
     
     
     h1 {
         color: var(---color-primary);
     }
 
-
-    
-
-
     form {
         background-color: var(---grey-3);
         width: 90%;
         max-width: 400px;
-        height: 60vh;
+        /* height: 60vh; */
+        padding: 40px 0px;
         color: var(---grey-0);
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 50px;
+        gap: 70px;
         border-radius: 4px;
+        margin-bottom: 200px;
+        
+        
 
         @media (max-height: 700px){
-            height: 75vh;
+            
         }
     }
 
@@ -48,16 +68,9 @@ export const Div = styled.div`
         display: flex;
         flex-direction: column;
         position: relative;
-
-        .eye {
-            color: var(---grey-1);
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            font-size: 22px;
-            cursor: pointer;
-        }
-        
+        gap: 16px;
+        color: var(---grey-0);
+    
         p {
             position: absolute;
             right: 0;
@@ -84,6 +97,7 @@ export const Div = styled.div`
             transition: 0.5s;
         }
 
+
         input {
             background-color: var(---grey-2);
             height: 50px;
@@ -94,6 +108,36 @@ export const Div = styled.div`
             color: var(---grey-0);
             font-size: 16px;
             
+            
+        }
+
+        /* input:focus ~ p{
+
+            background-color: red;
+        }  */
+            
+        label {
+            position: relative;
+        }
+
+        label[title]:hover::after{
+            border: 2px solid var(---grey-0);
+            padding: 10px;
+            content: attr(title);
+            position: absolute;
+            left: 50%;
+            
+            bottom: 0px;
+            /* transform: translateY(-150%); */
+        }
+
+        select {
+            height: 50px;
+            background-color: var(---grey-2);
+            color: var(---grey-0);
+            padding: 0px 10px;
+            font-size: 1rem;
+            border: 2px solid var(---grey-0);
         }
     }
 
@@ -119,14 +163,8 @@ export const Div = styled.div`
             font-size: 12px;
         }
 
-        a {
+        button {
             background-color: var(---grey-1);
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(---grey-0);
-            border-radius: 4px;
         }
     }
 

@@ -1,14 +1,11 @@
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
-import { Div } from "./registerStyle"
+import { Div } from "../../components/register/registerStyle"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { FiAlertCircle } from 'react-icons/fi'
-import { Api } from "../../Api/request"
-
-import { ToastContainer, toast } from 'react-toastify';
-
-import { useNavigate } from "react-router-dom"
+import { useContext } from "react"
+import { AuthContext } from "../../contexts/AutoContexxt"
 
 const schema = yup.object({
     name: yup.string().required('Nome é obrigatório'),
@@ -22,47 +19,15 @@ const schema = yup.object({
 
 export const Register = () => {
 
-    const navigate = useNavigate();
-
-    const notify_success = (alert) => toast.success("Registro realizado com sucesso !", {
-        position: toast.POSITION.TOP_CENTER
-    });
-
-      const notify_error = (alert) => toast.error(" {Erro ao fazer registro}", {
-        position: toast.POSITION.TOP_CENTER
-      });
+    const {registerUser} = useContext(AuthContext)
 
     const { register, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(schema),
     });
 
-    const registerUser = (data) => {
-
-        Api.post('/users', {
-            "email": data.email,
-            "password": data.password,
-            "name": data.name,
-            "bio": data.bio,
-            "contact": data.contact,
-            "course_module": data.course_module
-          })
-          .then(function (response) {
-            notify_success()
-
-            setTimeout(() => {
-                navigate('/login')
-            }, 5000);
-          })
-          .catch(function (error) {
-            notify_error()
-          });
-    }
-
     return (
         
         <Div>
-
-            <ToastContainer/>
 
             <div className="back">
                 <h1> Kenzie Hub</h1>

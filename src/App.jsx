@@ -1,17 +1,29 @@
 
-import './App.css';
-import { Routes, Route } from 'react-router-dom';
-import { Login } from './pages/Home';
-import { Register } from './pages/register';
-import { HomePage } from './pages/HomePage';
+// import './App.css';
+import { Rotas } from './routes';
+import { AuthProvider } from './contexts/AutoContexxt';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
-    <Routes>
-      <Route path='/' element={<Login/>}/>
-      <Route path='/register' element={<Register/>}/>  
-      <Route path='/home/:id' element={<HomePage/>}/>
-    </Routes>
+  <>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="dark"
+    />
+
+    <AuthProvider>
+      <Rotas/>
+    </AuthProvider>
+  </>
   );
 }
 

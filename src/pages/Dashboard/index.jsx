@@ -1,27 +1,36 @@
-import { HomeStyled } from "./HomePageStyled"
-import { useNavigate, useParams } from "react-router-dom"
+import { HomeStyled } from "../../components/homePage/HomePageStyled"
+import { Navigate, useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { Api } from "../../Api/request"
+import { Api } from "../../Api/axios"
 import { Link } from "react-router-dom"
 
+import { useContext } from "react"
+import { AuthContext } from "../../contexts/AutoContexxt"
+
 export const HomePage = () => {
+    
+    const {usuario, loading} = useContext(AuthContext)
 
     const [user, setUser] = useState('')
 
-    const navigate = useNavigate()
-
     const { id } = useParams()
+
     useEffect(() => {
     Api.get(`/users/${id}`)
     .then(resp => {
         setUser(resp.data)
-        localStorage.getItem('userToken') ? (<></>) : (navigate('/'))
         
     })
     }, [])
 
-    return(        
-        <HomeStyled>
+    if(loading){
+        return null;
+    }
+
+    return( 
+        <>     
+        {usuario ? (
+            <HomeStyled>
 
            <header>
             <div>
@@ -52,5 +61,9 @@ export const HomePage = () => {
           )} 
             
         </HomeStyled>
+        ) : (
+            <Navigate to='/'/>
+        )}
+    </>  
     )
 }

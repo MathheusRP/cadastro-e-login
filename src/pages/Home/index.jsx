@@ -1,21 +1,14 @@
 
-import { Div } from "./loginStyle"
-import { Link, Navigate } from "react-router-dom"
-import { useNavigate } from "react-router-dom"
-
+import { Div } from "../../components/login/loginStyle"
+import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from 'yup'
-
 import { FiAlertCircle } from 'react-icons/fi'
-
-import { Api } from "../../Api/request"
-
-import { ToastContainer, toast } from 'react-toastify';
-
 import { AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import { useState } from "react"
-
+import { AuthContext } from "../../contexts/AutoContexxt"
+import { useContext } from "react"
 
 const schema = yup.object({
     email: yup.string().required('Insira seu Email'),
@@ -23,49 +16,27 @@ const schema = yup.object({
 })
 
 export const Login = () => {
-
     const [typePassword, setTypePassword] = useState ('password')
 
     const [ eye, setEye ] = useState(false)
-
+    
     const eyes = () => {
         setEye(!eye)
-        
         eye ? (setTypePassword('password')) : (setTypePassword('text'))
     }
-
-    const navigate = useNavigate();
 
     const { register, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(schema),
     });
 
-    const loginUser = (data) => {
-
-        Api.post('/sessions', {
-            email: data.email,
-            password: data.password
-        })
-        .then(resp => {
-            localStorage.setItem('userToken', resp.data.token)
-            localStorage.setItem('userId', resp.data.user.id)
-            
-            navigate(`/home/${resp.data.user.id}`)
-        })
-        .catch(err => notify_error())
-    }
-
-      const notify_error = () => toast.error("Falha ao fazer login !", {
-        position: toast.POSITION.TOP_CENTER
-      });
+    const {loginUser} = useContext(AuthContext)
 
     return (
 
         <Div>
-            <ToastContainer />
       
             <h1> Kenzie Hub</h1>
-            <form onSubmit={handleSubmit(loginUser)}>
+            <form onSubmit={handleSubmit(loginUser)} >
                 <h2> Login </h2>
 
                 <section className="login">

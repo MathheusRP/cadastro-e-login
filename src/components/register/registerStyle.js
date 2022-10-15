@@ -3,18 +3,15 @@ import 'react-toastify/dist/ReactToastify.min.css'
 
 export const Div = styled.div`
 
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
     gap: 32px;
-    /* overflow-y: auto; */
     margin-top: 300px;
     margin-bottom: 100px;
     
-
     .back {
         display: flex;
         align-items: center;
@@ -30,7 +27,6 @@ export const Div = styled.div`
         }
     }
     
-    
     h1 {
         color: var(---color-primary);
     }
@@ -39,7 +35,6 @@ export const Div = styled.div`
         background-color: var(---grey-3);
         width: 90%;
         max-width: 400px;
-        /* height: 60vh; */
         padding: 40px 0px;
         color: var(---grey-0);
         display: flex;
@@ -49,12 +44,6 @@ export const Div = styled.div`
         gap: 70px;
         border-radius: 4px;
         margin-bottom: 200px;
-        
-        
-
-        @media (max-height: 700px){
-            
-        }
     }
 
     .login {
@@ -106,16 +95,9 @@ export const Div = styled.div`
             border: 2px solid var(---grey-0);
             border-radius: 4px;
             color: var(---grey-0);
-            font-size: 16px;
-            
-            
+            font-size: 16px; 
         }
 
-        /* input:focus ~ p{
-
-            background-color: red;
-        }  */
-            
         label {
             position: relative;
         }
@@ -126,9 +108,7 @@ export const Div = styled.div`
             content: attr(title);
             position: absolute;
             left: 50%;
-            
             bottom: 0px;
-            /* transform: translateY(-150%); */
         }
 
         select {
@@ -156,7 +136,6 @@ export const Div = styled.div`
         gap: 16px;
         width: 90%;
         
-
         span {
             color: var(---grey-1);
             align-self: center;

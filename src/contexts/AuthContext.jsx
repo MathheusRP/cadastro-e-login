@@ -12,11 +12,13 @@ export const AuthProvider = ({ children }) => {
   const [ loading, setLoading ] = useState(true)
 
   const navigate = useNavigate()
+  
+  const [ techAtual, setTech ] = useState('')
 
-  useEffect(() => {
+  const verification = () => {
     async function loadUser() {
       const usertoken = localStorage.getItem('userToken')
-
+      
       if (usertoken) {
         try{
           Api.defaults.headers.authorization = `Bearer ${usertoken}`;
@@ -30,6 +32,10 @@ export const AuthProvider = ({ children }) => {
       setLoading(false)
     }
     loadUser();
+  }
+
+  useEffect(() => {
+    verification()
   }, [])
 
   const loginUser = (data) => {
@@ -41,7 +47,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("userToken", resp.data.token);
       Api.defaults.headers.authorization = `Bearer ${resp.data.token}`;
       setUser(resp.data.user);
-      navigate(`/home/${resp.data.user.id}`, { replace: true });
+      navigate(`/dashboard`, { replace: true });
         
       })
       .catch((err) => notify_error());
@@ -70,7 +76,7 @@ export const AuthProvider = ({ children }) => {
   }
 
 
-  const notify_error = () => toast.error("Falha ao fazer login !", {
+  const notify_error = (message) => toast.error(message, {
     position: toast.POSITION.TOP_CENTER,
     autoClose: 2000,
     hideProgressBar: false,
@@ -81,7 +87,7 @@ export const AuthProvider = ({ children }) => {
     theme: "dark",
   });
 
-  const notify_success = () => toast.success("Registro realizado com sucesso !", {
+  const notify_success = (message) => toast.success(message, {
     position: toast.POSITION.TOP_CENTER,
     autoClose: 2000,
     hideProgressBar: false,
@@ -93,7 +99,7 @@ export const AuthProvider = ({ children }) => {
   });
 
   return (
-    <AuthContext.Provider value={{ loginUser, registerUser, usuario, loading }}>
+    <AuthContext.Provider value={{ loginUser, registerUser, usuario, loading, verification, setUser, techAtual, setTech, notify_success, notify_error }}>
       {children}
     </AuthContext.Provider>
   )

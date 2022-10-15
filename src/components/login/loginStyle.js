@@ -10,16 +10,10 @@ export const Div = styled.div`
     height: 100vh;
     gap: 32px;
     
-    
-    
     h1 {
         color: var(---color-primary);
        
     }
-
-
-    
-
 
     form {
         background-color: var(---grey-3);
@@ -34,10 +28,6 @@ export const Div = styled.div`
         align-items: center;
         gap: 50px;
         border-radius: 4px;
-
-        @media (max-height: 700px){
-            /* height: 700px; */
-        }
     }
 
     .login {
@@ -97,7 +87,6 @@ export const Div = styled.div`
             border-radius: 4px;
             color: var(---grey-0);
             font-size: 16px;
-            
         }
     }
 
@@ -115,7 +104,6 @@ export const Div = styled.div`
         flex-direction: column;
         gap: 16px;
         width: 90%;
-        
 
         span {
             color: var(---grey-1);

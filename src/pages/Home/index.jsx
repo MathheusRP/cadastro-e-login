@@ -7,8 +7,11 @@ import * as yup from 'yup'
 import { FiAlertCircle } from 'react-icons/fi'
 import { AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
 import { useState } from "react"
-import { AuthContext } from "../../contexts/AutoContexxt"
+import { AuthContext } from "../../contexts/AuthContext"
 import { useContext } from "react"
+import { useNavigate } from "react-router-dom"
+
+
 
 const schema = yup.object({
     email: yup.string().required('Insira seu Email'),
@@ -16,6 +19,9 @@ const schema = yup.object({
 })
 
 export const Login = () => {
+
+    const navigate = useNavigate()
+
     const [typePassword, setTypePassword] = useState ('password')
 
     const [ eye, setEye ] = useState(false)
@@ -29,7 +35,10 @@ export const Login = () => {
         resolver: yupResolver(schema),
     });
 
-    const {loginUser} = useContext(AuthContext)
+    const {loginUser, usuario} = useContext(AuthContext)
+
+    // console.log(usuario)
+    usuario ? (navigate('/dashboard')) : (<></>)
 
     return (
 

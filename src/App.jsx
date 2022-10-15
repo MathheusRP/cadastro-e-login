@@ -1,7 +1,7 @@
 
 // import './App.css';
 import { Rotas } from './routes';
-import { AuthProvider } from './contexts/AutoContexxt';
+import { AuthProvider } from './contexts/AuthContext';
 import { ToastContainer } from 'react-toastify';
 
 function App() {

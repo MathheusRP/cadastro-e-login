@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { FiAlertCircle } from 'react-icons/fi'
 import { useContext } from "react"
-import { AuthContext } from "../../contexts/AutoContexxt"
+import { AuthContext } from "../../contexts/AuthContext"
 
 const schema = yup.object({
     name: yup.string().required('Nome é obrigatório'),
@@ -25,10 +25,8 @@ export const Register = () => {
         resolver: yupResolver(schema),
     });
 
-    return (
-        
+    return (  
         <Div>
-
             <div className="back">
                 <h1> Kenzie Hub</h1>
                 <Link to={'/'}> Voltar</Link>

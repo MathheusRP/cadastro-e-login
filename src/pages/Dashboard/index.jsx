@@ -1,28 +1,28 @@
 import { HomeStyled } from "../../components/homePage/HomePageStyled"
-import { Navigate, useNavigate, useParams } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { Api } from "../../Api/axios"
-import { Link } from "react-router-dom"
+import { Navigate} from "react-router-dom"
+
+import { useNavigate } from "react-router-dom";
 
 import { useContext } from "react"
-import { AuthContext } from "../../contexts/AutoContexxt"
+import { AuthContext } from "../../contexts/AuthContext"
 
-export const HomePage = () => {
+import { TechnologyList } from "../../components/technologyList";
+
+export const Dashboard = () => {
+
+    const navigate = useNavigate()
+
+    const {usuario, loading, setUser} = useContext(AuthContext)
+
+
+    const logOff = () => {
+        localStorage.setItem('userToken', '')
+        setUser('')
+        navigate('/')
+    }
+
+
     
-    const {usuario, loading} = useContext(AuthContext)
-
-    const [user, setUser] = useState('')
-
-    const { id } = useParams()
-
-    useEffect(() => {
-    Api.get(`/users/${id}`)
-    .then(resp => {
-        setUser(resp.data)
-        
-    })
-    }, [])
-
     if(loading){
         return null;
     }
@@ -31,34 +31,33 @@ export const HomePage = () => {
         <>     
         {usuario ? (
             <HomeStyled>
+                <header>
+                        <div>
+                            <h1>Kenzie Hub</h1>
+                            {/* <button onClick></button> */}
+                            <button onClick={logOff} className="exit"> Sair </button>
+                            
+                        </div>
+                </header>
 
-           <header>
-            <div>
-            <h1>Kenzie Hub</h1>
-            
-            <Link to={'/'} className="exit"> Sair </Link>
-            </div>
-
-           </header>
-
-          {user ? (
-            <div>
-            <section className="info">
                 <div>
-                    <h2>Olá, {user.name}</h2>
-                    <span>{user.course_module}</span>
-                </div>
-            </section>
-            <section className="mensagem">
+                <section className="info">
+                    <div>
+                        <h2>Olá, {usuario.name}</h2>
+                        <span>{usuario.course_module}</span>
+                    </div>
+                </section>
+
+                <TechnologyList/>
+
+
+                {/* <section className="mensagem">
                     <div>
                         <h2> Que pena! Estamos em desenvolvimento :( </h2>
                         <p>Nossa aplicação está em desenvolvimento, em breve teremos novidades</p>
                     </div>
-                </section>
-          </div>  
-          ) : (
-            <h1>Loading</h1>
-          )} 
+                </section> */}
+            </div>  
             
         </HomeStyled>
         ) : (

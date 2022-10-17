@@ -50,13 +50,6 @@ export const Dashboard = () => {
 
                 <TechnologyList/>
 
-
-                {/* <section className="mensagem">
-                    <div>
-                        <h2> Que pena! Estamos em desenvolvimento :( </h2>
-                        <p>Nossa aplicação está em desenvolvimento, em breve teremos novidades</p>
-                    </div>
-                </section> */}
             </div>  
             
         </HomeStyled>

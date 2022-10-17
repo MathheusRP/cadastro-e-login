@@ -28,10 +28,11 @@ export const TechnologyList = () => {
         }
     }
 
-    const openTech = (data) => {
-        // setTech(data)
-        navigate('/dashboard/tech')
-        setTech(data)
+    const openTech = (event, data) => {
+        if(event.target.tagName === 'LI'){
+            navigate('/dashboard/tech')
+            setTech(data)
+        }
         
     }
 
@@ -45,20 +46,25 @@ export const TechnologyList = () => {
             <ul>
 
                 {
-                    usuario.techs.map(techs => {
-                        return (
-                            <li key={techs.id}  >
-                                <h3>{techs.title}</h3>
-                                <div>
-                                    <span onClick={(event) => openTech(techs)}>{techs.status}</span>
-                                    <button onClick={() => techsDelete(techs.id)} id={techs.id}>
-                                        <FaTrashAlt className="delete" />
+                    usuario.techs.length > 0 ? (
+                        usuario.techs.map(techs => {
+                            return (
+                                <li onClick={(event) => openTech(event,techs)} key={techs.id}  >
+                                    <h3>{techs.title}</h3>
+                                    <div>
+                                        <span >{techs.status}</span>
+                                        <button onClick={() => techsDelete(techs.id)} id={techs.id}>
+                                            <FaTrashAlt className="delete" />
+    
+                                        </button>
+                                    </div>
+                                </li>
+                            )
+                        })
+                    ) : (
 
-                                    </button>
-                                </div>
-                            </li>
-                        )
-                    })
+                        <h2>Lista vazia</h2>
+                    )
                 } 
             </ul>
             <Outlet/>

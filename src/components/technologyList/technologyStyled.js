@@ -40,6 +40,9 @@ ul {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    color: var(---grey-0);
+    cursor: pointer;
+    
     li {
         background-color: var(---grey-4);
         display: flex;
@@ -50,14 +53,18 @@ ul {
         div {
             display: flex;
             gap: 10px;
-
+            
             color: var(---grey-1);
             
             .delete {
                 color: var(---grey-1);
-
-
+                
+                &:hover {
+                    color: var(---grey-0);
+                    transform: scale(1.3);
+                }
             }
+            
 
         }
 
@@ -73,7 +80,9 @@ ul {
         &:focus{
             background-color: var(---grey-2);
         }
+
     }
+    
     
 }
 

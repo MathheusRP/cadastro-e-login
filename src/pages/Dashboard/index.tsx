@@ -7,29 +7,29 @@ import { useContext } from "react"
 import { AuthContext } from "../../contexts/AuthContext"
 
 import { TechnologyList } from "../../components/technologyList";
+import { UserContext } from "../../contexts/UserContext";
 
 export const Dashboard = () => {
 
     const navigate = useNavigate()
 
-    const {usuario, loading, setUser} = useContext(AuthContext)
+    const {checkUser, loading, setUser} = useContext(AuthContext)
+    const {user} = useContext(UserContext)
 
 
     const logOff = () => {
         localStorage.setItem('userToken', '')
-        setUser('')
+        setUser(null)
         navigate('/')
     }
-
-
     
     if(loading){
         return null;
     }
-
+    
     return( 
         <>     
-        {usuario ? (
+        {checkUser ? (
             <HomeStyled>
                 <header>
                         <div>
@@ -43,12 +43,12 @@ export const Dashboard = () => {
                 <div>
                 <section className="info">
                     <div>
-                        <h2>Olá, {usuario.name}</h2>
-                        <span>{usuario.course_module}</span>
+                        <h2>Olá, {checkUser.name}</h2>
+                        <span>{checkUser.course_module}</span>
                     </div>
                 </section>
 
-                <TechnologyList/>
+                <TechnologyList user={checkUser}/>
 
             </div>  
             

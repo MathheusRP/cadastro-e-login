@@ -5,40 +5,33 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from 'yup'
 import { FiAlertCircle } from 'react-icons/fi'
-import { AiFillEyeInvisible, AiFillEye} from 'react-icons/ai'
-import { useState } from "react"
-import { AuthContext } from "../../contexts/AuthContext"
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
-
-
+import { UserContext } from "../../contexts/UserContext"
+import { AuthContext } from "../../contexts/AuthContext"
 
 const schema = yup.object({
     email: yup.string().required('Insira seu Email'),
     password: yup.string().required('Insira sua senha')
 })
 
+interface IUserLogin {
+    email: string;
+    password: string;
+}
+
 export const Login = () => {
 
     const navigate = useNavigate()
 
-    const [typePassword, setTypePassword] = useState ('password')
-
-    const [ eye, setEye ] = useState(false)
-    
-    const eyes = () => {
-        setEye(!eye)
-        eye ? (setTypePassword('password')) : (setTypePassword('text'))
-    }
-
-    const { register, handleSubmit, formState: {errors}} = useForm({
+    const { register, handleSubmit, formState: {errors}} = useForm<IUserLogin>({
         resolver: yupResolver(schema),
     });
 
-    const {loginUser, usuario} = useContext(AuthContext)
+    const {checkUser} = useContext(AuthContext)
+    const {loginUser} = useContext(UserContext)
 
-    // console.log(usuario)
-    usuario ? (navigate('/dashboard')) : (<></>)
+    checkUser ? (navigate('/dashboard')) : (<></>)
 
     return (
 
@@ -58,9 +51,8 @@ export const Login = () => {
                     </div>
                     <div className="DivInput">
                         <label htmlFor="password"> Password</label>
-                        <input id="password" type={typePassword}
+                        <input id="password" type='password'
                         {...register ('password')} />
-                        {eye ? ( <AiFillEyeInvisible onClick={eyes} className="eye"/> ) : ( <AiFillEye onClick={eyes} className="eye"/> )}
                     </div>
                     <button type="submit"> Entrar</button>
                 </section>

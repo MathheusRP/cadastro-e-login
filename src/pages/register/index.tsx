@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { FiAlertCircle } from 'react-icons/fi'
 import { useContext } from "react"
-import { AuthContext } from "../../contexts/AuthContext"
+import { UserContext } from "../../contexts/UserContext"
 
 const schema = yup.object({
     name: yup.string().required('Nome é obrigatório'),
@@ -17,11 +17,21 @@ const schema = yup.object({
     course_module: yup.string().required('modulo é obrigatório')
 })
 
+interface IUserRegister {
+    email: string;
+    password: string;
+    name: string;
+    bio: string;
+    contact: string;
+    course_module: string;
+    confirm_password:string;
+}
+
 export const Register = () => {
 
-    const {registerUser} = useContext(AuthContext)
+    const {registerUser} = useContext(UserContext)
 
-    const { register, handleSubmit, formState: {errors}} = useForm({
+    const { register, handleSubmit, formState: {errors}} = useForm<IUserRegister>({
         resolver: yupResolver(schema),
     });
 
@@ -79,7 +89,7 @@ export const Register = () => {
                         <p >{errors.contact?.message}</p>
                     </div>
                     <div className="DivInput">
-                        <select name="" id="" 
+                        <select 
                         {...register('course_module')} > 
                             <option value='' > Selecione um módulo </option>
                             <option value='Primeiro módulo (Introdução ao Frontend'> Primeiro módulo (Introdução ao Frontend) </option>

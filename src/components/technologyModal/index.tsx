@@ -9,6 +9,11 @@ import { useContext, useEffect } from "react"
 import { AuthContext } from "../../contexts/AuthContext"
 import { ToastContainer } from "react-toastify"
 
+interface INewTech {
+    title: string;
+    status: string;
+}
+
 
 const schema = yup.object({
     title: yup.string().required('* Nome é obrigatório'),
@@ -19,18 +24,18 @@ export const TechnologyModal = () => {
 
     const navigate = useNavigate()
 
-    const {register, handleSubmit, formState: {errors}} = useForm({
+    const {register, handleSubmit, formState: {errors}} = useForm<INewTech>({
         resolver: yupResolver(schema)
     })
 
-    const { verification, notify_success, notify_error } = useContext(AuthContext)   
+    const { update, notify_success, notify_error } = useContext(AuthContext)   
 
-    const  registerTechnology  = async (data) => {
+    const  registerTechnology  = async (data: INewTech) => {
         try {
            await Api.post('/users/techs', data);
                 
-           verification()
-           notify_success('Tecnologia criada com sucesso')
+            update()
+            notify_success('Tecnologia criada com sucesso')
             navigate('/dashboard')
             
         } catch (error) {
@@ -55,14 +60,14 @@ export const TechnologyModal = () => {
                     </div>
                     <div>
                         <label htmlFor="nivel">Selecionar Status <span className="error">{errors.status?.message}</span></label>
-                        <select name="" id="nivel"
+                        <select id="nivel"
                         {...register('status')}>
                             <option value="Iniciante">Iniciante</option>
                             <option value="Intermediário">Intermediário</option>
                             <option value="Avançado">Avançado</option>
                         </select>
                     </div>
-                    <button type="subimit">Cadastrar Tecnologia</button>
+                    <button type="submit">Cadastrar Tecnologia</button>
                 </form>
             </section>
         </ModalStyled>

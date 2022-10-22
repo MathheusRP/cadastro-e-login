@@ -9,6 +9,9 @@ import { useContext } from "react"
 import { AuthContext } from "../../contexts/AuthContext"
 import { ToastContainer } from "react-toastify"
 
+interface Istatus {
+    status: string;
+}
 
 const schema = yup.object({
     status: yup.string().required('* Status é obrigatório'),
@@ -18,19 +21,19 @@ export const TechModal = () => {
 
     const navigate = useNavigate()
 
-    const {register, handleSubmit, formState: {errors}} = useForm({
+    const {register, handleSubmit, formState: {errors}} = useForm<Istatus>({
         resolver: yupResolver(schema)
     })
     
-    const { verification, techAtual, notify_success, notify_error } = useContext(AuthContext)   
+    const { update, techAtual, notify_success, notify_error } = useContext(AuthContext)   
 
-    const  newStatus  = async (data) => {
+    const  newStatus  = async (data: Istatus) => {
 
         try {
-            await Api.put(`/users/techs/${techAtual.id}`, data) 
+            await Api.put(`/users/techs/${techAtual?.id}`, data) 
                 
-           verification()
-           notify_success('Status alterado com sucesso' )
+            update()
+            notify_success('Status alterado com sucesso' )
             navigate('/dashboard')
            
         } catch (error) {
@@ -50,18 +53,18 @@ export const TechModal = () => {
                 <form onSubmit={handleSubmit(newStatus)}>
                     <div>
                         <label htmlFor="name">Nome</label>
-                        <input disabled value={techAtual.title} id="name" type="text" placeholder="Nome"/>
+                        <input disabled value={techAtual?.title} id="name" type="text" placeholder="Nome"/>
                     </div>
                     <div>
                         <label htmlFor="nivel">Selecionar Status <span className="error">{errors.status?.message}</span></label>
-                        <select name="" id="nivel"
+                        <select id="nivel"
                         {...register('status')}>
                             <option value="Iniciante">Iniciante</option>
                             <option value="Intermediário">Intermediário</option>
                             <option value="Avançado">Avançado</option>
                         </select>
                     </div>
-                    <button  type="subimit">Cadastrar Tecnologia</button>
+                    <button  type="submit">Cadastrar Tecnologia</button>
                 </form>
             </section>
         </ModalStyled>

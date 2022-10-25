@@ -7,8 +7,7 @@ import { FaTrashAlt } from 'react-icons/fa'
 import { Api } from "../../Api/axios"
 
 interface ITechs {
-    filter(arg0: (techs: any) => void): unknown
-    map(arg0: (techs: any) => JSX.Element): import("react").ReactNode
+    map: ITechs;
     id: string;
     title: string;
     status: string;
@@ -52,7 +51,7 @@ export const TechnologyList = ({user}: IuserProps) => {
         }
     }
 
-    const openTech = (event: any, data : ITechs) => {
+    const openTech = (event: React.MouseEvent<HTMLLIElement, MouseEvent>, data : ITechs) => {
         const target = event.target as HTMLInputElement
         if(target.tagName === 'LI'){
             navigate('/dashboard/tech')

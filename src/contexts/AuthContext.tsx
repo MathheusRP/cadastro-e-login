@@ -14,8 +14,6 @@ export interface IAuthContext {
 }
 
 interface ITech {
-  filter(arg0: (techs: any) => void): unknown
-  map(arg0: (techs: any) => JSX.Element): import("react").ReactNode
   created_at: string
   id: string;
   status: string;
@@ -30,7 +28,7 @@ interface IUser {
   course_module: string 
   bio: string 
   contact: string 
-  techs: ITech 
+  techs: ITech[]
   works: [] 
   created_at: string 
   updated_at: string 

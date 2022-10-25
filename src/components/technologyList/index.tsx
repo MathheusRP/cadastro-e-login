@@ -7,7 +7,6 @@ import { FaTrashAlt } from 'react-icons/fa'
 import { Api } from "../../Api/axios"
 
 interface ITechs {
-    map: ITechs;
     id: string;
     title: string;
     status: string;
@@ -73,7 +72,7 @@ export const TechnologyList = ({user}: IuserProps) => {
                     checkUser ? (
                         checkUser.techs?.map(techs => {
                             return (
-                                <li onClick={(event) => openTech(event, techs)} key={techs.id}  >
+                                <li onClick={(event) => openTech(event, techs as ITechs)} key={techs.id}  >
                                     <h3>{techs.title}</h3>
                                     <div>
                                         <span >{techs.status}</span>
